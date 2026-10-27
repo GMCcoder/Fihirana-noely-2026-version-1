@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
 
         if (savedInstanceState == null) {
             webView.loadUrl(
-                "https://gmcocoder.github.io/Fihirana-noely-2026-version-1/"
+                "https://gmccoder.github.io/Fihirana-noely-2026-version-1/"
             );
         } else {
             webView.restoreState(savedInstanceState);
