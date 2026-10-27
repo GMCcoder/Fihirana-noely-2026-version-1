@@ -6,7 +6,7 @@
     <application
         android:theme="@android:style/Theme.Material.Light.NoActionBar"
         android:label="Fihirana Noely"
-        android:icon="@drawable/icone"
+        android:icon="@drawable/icone.jpg"
         android:usesCleartextTraffic="false"
         android:allowBackup="true">
 
