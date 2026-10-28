@@ -2,4 +2,743 @@
 :root{--bg:#090510;--panel:#160b25;--violet:#d500ff;--pink:#ff35d3;--blue:#55d9ff;--text:#fbf5ff;--muted:#b9a9c9;--line:#59306d}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#3b075b,#14081f 42%,var(--bg) 75%);color:var(--text);font-family:system-ui,sans-serif;min-height:100vh}button,input{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;padding:16px 15px 36px}header{display:flex;justify-content:space-between;align-items:center;padding:8px 0 20px}.brand{font-weight:900;letter-spacing:.04em;text-shadow:0 0 12px var(--violet);font-size:1.25rem}.brand span{color:var(--blue)}.pill{border:1px solid #8e35a9;border-radius:99px;padding:6px 10px;color:#e8c8ff;font-size:.75rem}.hero{text-align:center;padding:27px 12px 24px;border:1px solid #59236e;border-radius:24px;background:linear-gradient(145deg,#21102fdd,#10091add);box-shadow:0 0 24px #b000ff22}.orb{width:96px;height:96px;margin:0 auto 15px;border-radius:50%;display:grid;place-items:center;font-size:2.7rem;background:radial-gradient(circle,#4b126b,#170725 68%);border:2px solid var(--violet);box-shadow:0 0 14px var(--violet),0 0 35px #a000ff88;animation:pulse 1.25s ease-in-out infinite alternate}@keyframes pulse{to{transform:scale(1.04);box-shadow:0 0 18px var(--pink),0 0 44px #a000ffbb}}h1{font-size:clamp(1.7rem,7vw,2.4rem);margin:0}.neon{color:#f5d4ff;text-shadow:0 0 8px #e000ff,0 0 22px #a000ff}.subtitle{color:var(--muted);font-size:.92rem;line-height:1.5}.title{font-size:1.08rem;margin:23px 0 12px}input{width:100%;padding:13px 14px;border:1px solid #63357a;border-radius:13px;background:#10091b;color:var(--text)}input::placeholder{color:#9d8ba9}.tabs,.actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.btn{border:1px solid #8b36ad;border-radius:12px;padding:10px 13px;color:white;background:#28103b}.btn.active,.btn.primary{background:linear-gradient(110deg,#9e00d9,#5e24d6);border-color:#e37cff;box-shadow:0 0 15px #bb00ff44}.card{border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#1b0e2b,#100a19);padding:13px;margin:10px 0;box-shadow:0 8px 22px #0002}.song{display:flex;align-items:center;gap:11px}.ico{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:#35104b;border:1px solid #8539a5;font-size:1.3rem;flex-shrink:0}.info{min-width:0;flex:1}.info h3{font-size:.97rem;margin:0 0 4px;overflow-wrap:anywhere}.info p,.note{font-size:.78rem;color:var(--muted);margin:0;line-height:1.5}.iconbtn{border:1px solid #5d3670;border-radius:10px;background:#1b1028;color:#f6d7ff;padding:8px}.empty{text-align:center;color:var(--muted);padding:22px 12px;border:1px dashed #603b70;border-radius:14px;line-height:1.6}.hidden{display:none!important}.readerTitle{font-size:1.3rem;margin:0 0 12px}.lyrics{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.85;background:#0c0713;border:1px solid #402650;border-radius:13px;padding:16px;color:#fff7ff}footer{text-align:center;color:#887894;font-size:.75rem;padding:25px 8px}.splash{position:fixed;inset:0;z-index:5;display:grid;place-items:center;background:radial-gradient(circle at center,#32104b,#090510 65%);transition:opacity .45s}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body><div id="splash" class="splash"><div style="text-align:center;padding:24px"><div class="orb">♫</div><h1 class="neon">NEON<span style="color:#55d9ff">LYRICS</span></h1><p class="subtitle">Ton recueil de paroles · violet néon</p><div style="width:150px;height:3px;background:#341344;margin:20px auto"><div style="height:100%;background:#d500ff;animation:load 4s linear"></div></div></div></div><style>@keyframes load{from{width:0}to{width:100%}}</style>
 <div class="app"><header><div class="brand">♫ NEON<span>LYRICS</span></div><div class="pill">✦ MODE NÉON</div></header><section class="hero"><div class="orb">♫</div><p class="subtitle">TON RECUEIL PERSONNEL</p><h1 class="neon">Les paroles, <span style="color:var(--blue)">à portée de main.</span></h1><p class="subtitle">Recherche un titre ou un passage dans les paroles.</p></section><h2 class="title">⌕ Rechercher</h2><input id="search" type="search" placeholder="Titre ou mots des paroles…" aria-label="Rechercher dans les chansons"><div class="tabs"><button class="btn active" id="all">Toutes les chansons</button><button class="btn" id="favs">♡ Favoris</button></div><div id="list"></div><section id="reader" class="card hidden"><p class="note">LECTURE DES PAROLES</p><h2 id="readerTitle" class="readerTitle"></h2><div class="actions"><button class="btn" id="favBtn">♡ Ajouter aux favoris</button><button class="btn" id="back">← Retour</button><button class="btn" id="smaller">A−</button><button class="btn" id="bigger">A＋</button></div><div id="lyrics" class="lyrics"></div><p class="note" style="margin-top:10px">Lecture seule. Certaines lignes du PDF original étaient difficiles à lire ; les passages incertains sont signalés dans le fichier texte séparé.</p></section><footer>NEONLYRICS · Ton recueil de paroles 💜</footer></div>
-<script>(()=>{const songs=[{"id": "s1", "title": "Jesosy malala ô, mitariha ahy", "lyrics": "Jesosy malala ô, mitariha ahy\nMba ampio aho handeha amin’ny lalanao.\n\n[Andininy hita amin’ny sary — misy andalana tsy mazava]\n\nAnao aho, novidinao.\nAnao aho, ka momba ahy tokoa,\nArovy eny an-dalana;\nAfaho amin’ny ota rehetra,\nAvereno raha mania.\n\nJesosy malala ô!\nHenoy fa mba mitalaho;\nJesosy malalako ô!\nMivavaka aminao.\n\nNampanantena ianao fa handray,\nNa mpanota mahantra;\nNy fahasoavanao hamenoy indray,\nHanadio, hanafaka.\n\nJesosy malala ô!\nAmpodio an-tranonao;\nJesosy malalako ô!\nAmpodio faingana aho.\n\nAoka hahita sitraka Aminao,\nHanao izay mahafaly Anao;\nTompo malala sy Mpamonjy ahy,\nFenoy ny fitiavanao.", "favorite": false}, {"id": "s2", "title": "Tsy miova omaly, anio ary mandrakizay", "lyrics": "Tsy miova omaly, anio ary mandrakizay.\n\nRaha nanandratra ahy Izy,\nHampandresy anao koa.\n\n[Ny sisa amin’ny tononkira amin’ity pejy ity dia tsy voavaky mazava tamin’ny sary.]", "favorite": false}, {"id": "s3", "title": "Jesosy no hany vahaolana", "lyrics": "JESOSY NO HANY VAHAOLANA\n\nJesosy no hany vahaolana,\nAzo antoka ho an’izao tontolo izao;\nJesosy no hany vahaolana,\nTsy misy afa-tsy Izy ihany.\n\n1. Misy adin-tsaina mety manjo anao,\nToa kivy sy mamoy fo;\nVesaran’ireo lasa tsy nahomby hatramin’ny ela,\nJesosy no vahaolana atoroko anao.\n\n2. Tendrombohitra no indro manoloana anao,\nNy andronao toa maizina, tsy misy fahazavana;\nFa lazaiko anao fa tsy miova Andriamanitra,\nTreo tenifikasany mbola hainy atao aminao.", "favorite": false}, {"id": "s4", "title": "Jesosy no sakaiza tsara indrindra", "lyrics": "JESOSY NO SAKAIZA TSARA INDRINDRA\n\n1. Mandalo ady ve ianao?\nFeno alahelo, ratram-po;\nKetraka sy very hevitra,\nMatokia, Jesosy eo anilanao.\n\n2. Raha takon-drahona\nNy anjara masoandronao,\nJesosy no vahaolana,\nNy fitiavany tsy manam-petra.\n\nManàna faharetana,\nTohizo ny fanompoana;\nAza atsahatra ny vavaka,\nHo hitanao ny asan’Andriamanitra.\nNy tenifikasany tsy miova,\nIzay lazainy dia tanterahiny.", "favorite": false}, {"id": "s5", "title": "Jesosy ô, ianao no tiako", "lyrics": "JESOSY Ô, IANAO NO TIAKO\n\nJesosy ô, ianao no tiako,\nKa faniriako ny hanara-dia Anao\nHatramin’ny farany.\n\nKa ny hany fifaliako\nDia ny hanompo Anao,\nHanompo Anao aho.\n\nIsan’andininy\nNa sarotra aza anie ny diako,\nDia mbola ianao no tiako;\nTsy atakaloko an’izao tontolo izao,\nNa vola na harena,\nDia tsy hisy hahasolo Anao.\n\n2. Na inona na inona hiseho,\nIzaho tsy hiala eo,\nAnilanao eo, Jesosiko;\nHamelaranao latabatra,\nKa dia sambatra,\nMahatsiaro miadana.", "favorite": false}, {"id": "s6", "title": "Ny zava-drehetra hainao atao", "lyrics": "NY ZAVA-DREHETRA HAINAO ATAO\n\n[Andininy hita amin’ny faran’ny pejy 7]\n\nTalanjona aho raha nahita ny zava-maniry,\nAmpitomboinao isan’andro ny voa.\nGaga aho, hainao atao amiko koa.\n\nIsan’andininy\nNy lanitra mitory ny voninahitrao tokoa,\nNy zava-drehetra hainao atao, ry Tsitoha;\nResy lahatra aho ka dia faly tokoa,\nAvy Aminao ireo zava-mahasoa.\n\n2. Ny vorona manidina, tsara koa ny feony,\nMihira ho Anao, kanto ery ny fanenony;\nFenoy hira koa aho hidera Anao.\n\n3. Ny rano mikoriana, ny rivotra mitsoka koa,\nNy ranomasina dia noforoninao;\nRaiso aho Tompo ô, ka karakarao toy ireo.", "favorite": false}];let favoritesOnly=false,current=null,font=16;const $=id=>document.getElementById(id);function render(){const q=$('search').value.trim().toLocaleLowerCase('fr');const arr=songs.filter(s=>(!favoritesOnly||s.favorite)&&(!q||s.title.toLocaleLowerCase('fr').includes(q)||s.lyrics.toLocaleLowerCase('fr').includes(q)));$('list').innerHTML=arr.length?arr.map(s=>`<article class="card song"><div class="ico">♫</div><div class="info"><h3>${esc(s.title)}</h3><p>${s.lyrics.split(/\s+/).filter(Boolean).length} mots · recueil importé</p></div><button class="iconbtn" data-open="${s.id}">Lire</button><button class="iconbtn" data-fav="${s.id}">${s.favorite?'♥':'♡'}</button></article>`).join(''):'<div class="empty">Aucune chanson trouvée. Essaie un autre titre ou mot.</div>';$('list').querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openSong(b.dataset.open));$('list').querySelectorAll('[data-fav]').forEach(b=>b.onclick=()=>toggle(b.dataset.fav));}function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}function openSong(id){current=songs.find(s=>s.id===id);$('readerTitle').textContent=current.title;$('lyrics').textContent=current.lyrics;$('lyrics').style.fontSize=font+'px';$('favBtn').textContent=current.favorite?'♥ Retirer des favoris':'♡ Ajouter aux favoris';$('reader').classList.remove('hidden');$('reader').scrollIntoView({behavior:'smooth',block:'start'});}function toggle(id){const s=songs.find(x=>x.id===id);s.favorite=!s.favorite;render();if(current&&current.id===id)$('favBtn').textContent=s.favorite?'♥ Retirer des favoris':'♡ Ajouter aux favoris';}$('search').addEventListener('input',render);$('all').onclick=()=>{favoritesOnly=false;$('all').classList.add('active');$('favs').classList.remove('active');render();};$('favs').onclick=()=>{favoritesOnly=true;$('favs').classList.add('active');$('all').classList.remove('active');render();};$('favBtn').onclick=()=>current&&toggle(current.id);$('back').onclick=()=>{ $('reader').classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'});};$('bigger').onclick=()=>{font=Math.min(28,font+2);$('lyrics').style.fontSize=font+'px';};$('smaller').onclick=()=>{font=Math.max(12,font-2);$('lyrics').style.fontSize=font+'px';};render();setTimeout(()=>{const s=$('splash');s.style.opacity='0';setTimeout(()=>s.remove(),500);},4000);})();</script></body></html>
+<script>
+  (()=>{
+    const songs = [
+  {
+    id: "s232",
+    title: "MIANDRY ANAO",
+    lyrics: `1 Very hevitra ve ianao
+Tsy hita intsony izay atao
+Nitady vaholàna,
+Nanandratra izao rehetra izao,
+Ireo havana akaiky anao.
+Sy ireo namana dia nandao
+Nanao sy nandatsalatsa
+Fa hoe lavo ianao.
+
+Isan’andininy:
+Indro izao, hampahafantariko anao
+Misy olona mitady anao
+Be fitiavany ny betsaka izao
+Maniry ny hitondra anao am-pilaminana.
+
+2 Tsy mbola mazava ny lalana,
+Mbola maro ny zavatra tsy fantatra
+Nefa toa feno fanantenana
+... (tohiny tsy mazava amin’ny sary)
+
+3 Tsy very hevitra toa resy ianao!
+Izay rehetra atao mandamoka,
+Ireo tsy tia, sahy mitsara
+Ny fo sy saina, feno ahiahy;
+Aza kivy, Andriamanitra
+Hiady ho anao, hano lalana.`,
+    favorite: false
+  },
+  {
+    id: "s215",
+    title: "TARANAKA VOAFIDY ISIKA",
+    lyrics: `1 Derao Jesosy, namonjy antsika,
+Lavitra fahiny, fa nofidiany,
+Tsy natao mpanompo, fa ho sakaiza
+Tonga mpiray lova, amin’i Kristy.
+Natsangany ny Ray ho tonga zanany,
+Zanaky ny teny fikasana,
+Olona nantsoina amin’ny Anarany,
+Mandova fitahiana, ambany fahasoavana.
+
+Isan’andininy:
+Taranaka voafidy isika e!
+Taranak’i Abrahama amin’ny finoana
+Manokatra ny fanapresy
+Nandray fanajana tsy ampihorohoroana
+Zanaky ny Avo isika
+Nahazo tso-drano, la olona ambony
+Olona voatahiry isika e!
+Mitraka, faza miondrika intsony.
+
+2 Mahatsiaro tena sambatra isika
+Manana Andriamanitra mahery,
+Mpanolo fahagagana, Titolona indrindray
+Jehovah Andriamanitra’ny Israely,
+Rain’ny kamboty, mpitondra tena,
+Ray be indrafo, sy mba manavaka,
+Tompon’ny volafotsy sy volamena,
+Mpanome hery, mampaly vavaka.`,
+    favorite: false
+  },
+  {
+    id: "s216",
+    title: "NY FAHASOAVANAO NO HERIKO",
+    lyrics: `1 Ny fahasoavanao no namonjena ahy
+Ny fahasoavanao no nitahiry ahy,
+Noho ny fahasoavanao dia niova ny fiainako,
+Ny fahasoavanao no maha-toy izao ahy.
+Na dia tsy mendrika ny Anaranao
+Endrey! fa tonga zanakao
+Manana lova lanitra,
+Tsy misy avy amiko,
+Tsy my fahamendrehako
+Fa noho ny famindrampon’ny fahasoavanao.
+
+Isan’andininy:
+Ny fahasoavanao Tompo ô! no heriko
+Aoka hanaraka ahy amin’ny androm-piainako,
+Famindramponao no hanarona ny fiainako,
+Ny indrafoanao Tompo ô! no halofako.
+
+2 Nahatraka ny vesatra tsy zakako
+Niboritra ny fetra izay tsy tratra,
+Nanana aretina tsy rava
+Noho ny fahasoavanao.`,
+    favorite: false
+  },
+  {
+    id: "s217",
+    title: "MBA HO IRAY IHANY IZY REHETRA",
+    lyrics: `Isan’andininy:
+Mba ho iray ihany izy rehetra,
+Jesosy nanatitra;
+Fitia­vana no lehibe indrindra
+Tsy hisy fisarahana
+Dia ho tafaray,
+Dia tsy hifankatia, fa hifampitazana,
+Lanitra iray no irina,
+Koa handeha hitambatra.
+
+1 Tsy misy samihafa isika
+Fa taranaka iray,
+Ra iray no mikoriana
+Tompo iray no iasana,
+Andriamanitra Rain-tsika
+Tsy tia fikotranana,
+‘Lay Jesosy Tompontsika
+Andrian’ny fiadanana.
+
+2 Ny fifankatiavana
+Dia vokatra avy Fanahy,
+Ny ady sy ny loben-po
+Samy asan’ny nofo
+Iza no tsy hahalala
+Fa ho very ny mangahalahala,
+Ndao mpitory ho lavina
+Nenina mandrakizay.`,
+    favorite: false
+  },
+  {
+    id: "s218",
+    title: "VANGIO NY FIANGONANAY",
+    lyrics: `1 Mamindra fo aminay
+O ry Rainay be fitia,
+Vangio ny fiangonanay
+Ity lovanao ity.
+Aza mba manary anay
+Hiala ao anatrehanao,
+Aza esorina aminay
+Ny Fanahy Masina.
+
+Isan’andininy:
+Aza mahafoy ny lovanao Jehovah ô!
+Tsarovy ny indrafoanao,
+Velomy ny an-tena-tsaona ny asanao
+Mba hifalianay indray.
+
+2 Efa nibebaka izahay,
+Mamelà ny helokay,
+O! Mba ampio indray
+Ny fialan’ny famonjena,
+Miandrandra famangiana
+Ilay fara-orana,
+Ka hisolo fiderana
+Ny lamba fisentoana.
+
+3 O! Ry mora fo indindra ô!
+Mitalaho izahay!
+Aoka hitsetra F’aza afindra e!
+Ny fanavon-jirony,
+Mba tsy ho tantara sisa.`,
+    favorite: false
+  },
+  {
+    id: "s638",
+    title: "NY ONDRIKO MAHALALA NY FEOKO",
+    lyrics: `1 Ny ondriko mahalala ny feoko
+Ka manaraka ny lalako,
+Rehefa antsoiko dia manatona
+Ny vahiny dia tsy fantany.
+
+Ny ondriko dia mahaino ny feoko;
+Mihotra tsara am-bala,
+Ka dia tsy mba mania;
+Tia Ahy ny ondry
+Zay Nofidiko mba ho Ahy;
+Ny ondriko mahalala
+Sy mihaino ny feoko.
+
+2 Emy amin’ny ahi-maitso no entiko
+Mba hamahanako azy;
+Eny amoron-drano fialan-tsasatra
+No hitariho azy ireo.
+
+3 Ny lohasahan’ny fahafatesana
+‘Zay tsy maintsy handalovany,
+Dia tsy handratra na hanimba azy
+Satria homb’ahy hatrany Aho.
+
+Isan’andininy:
+Izy no mizara
+Ny zavatra izay ilainko
+Sakaizako tokana Izy;
+Azy ‘zao rehetra izao,
+Ka tsy hitoky amin’ny hafa aho.`,
+    favorite: false
+  },
+  {
+    id: "s655",
+    title: "IZY NO SAKAIZAKO",
+    lyrics: `1 Ny haren(a) rehet(r)a
+An’i Kristy Tompo
+Tsy hanahy aho, fa Izy no
+Ilay Sakaizako.
+
+2 Ny haren’ny rehetra
+An’i Kristy Tompo
+Tsy hanahy aho, fa Izy no
+Ilay Sakaizako.`,
+    favorite: false
+  },
+  {
+    id: "s495",
+    title: "ILAY LEHIBE",
+    lyrics: `1 Iza no nanana ny havoana
+Ny renirano sy lohasaha
+Ny volana mbamin’ny kintana?
+Lay lehibe noho ‘zaho sy anao.
+
+2 Iza no nanana ny feon-kira
+Mba hokalain’ny railovy
+Mampanontany ny ranon’orana?
+‘Lay lehibe noho ‘zaho sy anao.`,
+    favorite: false
+  },
+  {
+    id: "s230",
+    title: "TEHIRIZO AHO",
+    lyrics: `1 Anao aho Jesosy ô!
+Resy lahatra tokoa
+Fa mihazona ahy ny tananao,
+Fanomezanao ahy
+Ny Fanahy Masina
+Manampatra ahy tsy mitsahatra.
+
+Isan’andininy:
+Tehirizo aho Tompo ô!
+Haharitra mandra-pahavina
+Fa tsy misy mahaleo tena aho,
+Fa mila Anao hitantana ahy
+Ny eo anilanao Jesosy ô!
+No misy fahasambarana.
+
+2 Amin’ireo fitsapana
+Tsy maintsy hiatrehana
+Tehirizo aho tsy hivarina-dalana
+Amin’ny oran’ny fakam-panahy
+Mitady handavo ahy
+Dia Ianao no hazo ahy.
+
+3 Fa raha tonga ny andro iray
+Handraisanao ahy,
+Notohizanao ka tody soa
+Dia hanako ao an-danitra ao
+Ny hiran’olo-masina,
+Fihiram-baovao no hiderako Anao.`,
+    favorite: false
+  },
+  {
+    id: "s231",
+    title: "FETIN’NY RAY",
+    lyrics: `1 Andriamanitra ô, deraina ny Anaranao
+Tamin’ny nanomezanao an’i Dadanay
+Fa ‘zahay anie tsy mba toy izao
+Raha tsy nomenao an’i Dada malalanay.
+
+Isan’andininy:
+Jesosy malala ô! Tsinjovy re i Dada
+Tahio hatrany ho salama sy ho hery
+Irinay ny hombanao azy isan’andro
+Mandra-pahavonona haka azy hiala ety.
+
+2 Ry Tompo tsara ô! Tahio re dadanay
+Ampitomboy ny fahasoavanao ao aminy
+Omeo ny fahalalam-pahasalamana
+Tolory hery hanefany ny adidiny.
+
+Jesosy Tompo malala ô! Tehirizo re i Dada
+Ampaherezo ao amin’ny fanompoana
+Ka izy sy ‘zahay ankohonany
+Samy ho tody soa ao amin’ny fanjakanao.`,
+    favorite: false
+  },
+  {
+    id: "s206",
+    title: "JESOSY NO HANY VAHAOLANA",
+    lyrics: `Isan’andininy:
+Jesosy no hany vahaolana
+Azo antoka ho an’izao tontolo izao
+Jesosy no hany vahaolana
+Tsy misy afa-tsy Izy no lalàna.
+
+1 Misy adin-tsaina mety mampahory anao
+Toa kivy sy mamoy fo, tsy misy fiadanana
+Vesaran’iro lasan’ny fahombiazana
+Jesosy no vahaolana atoroko anao.
+
+2 Tendrombohitra no indro manoloana anao
+Ny andraikitra toa maizina, tsy hahazaka
+Fa azaiko anao fa tsy miova Andriamanitra
+Ireo tenifikasany mbola hainy atao aminao.`,
+    favorite: false
+  },
+  {
+    id: "s207",
+    title: "JESOSY NO SAKAIZA TSARA INDRINDRA",
+    lyrics: `1 Mandalo ady ve ianao?
+Feno alahelo, ratram-po
+Ketraka sy very hevitra
+Matokia, Jesosy eo anilanao.
+
+2 Raha takon-drahona
+Ny anjara masoandronao
+Jesosy no vahaolana
+Ny fitiavany tsy manam-petra.
+
+3 Manana faharetana
+Tobio ny fanompoana
+Aza atahatra ny vavaka
+Ho hitanao ny herin’Andriamanitra.
+
+Isan’andininy:
+Jesosy no sakaiza tsara indrindra
+Nanolotra ny ainy ho famonjena
+Ny tenifikasany tsy miova
+Izay lazainy tanterahiny.`,
+    favorite: false
+  },
+  {
+    id: "s208",
+    title: "JESOSY O! IANAO NO TIAKO",
+    lyrics: `1 Jesosy ô, Ianao no tiako,
+Ka faniriako, hanara-dia Anao
+Hatrany amin’ny farany.
+Ka ny hany fifaliako
+Dia ny hanompo Anao
+Hanompo Anao aho.
+
+2 Ny foko sy ny fiainako
+Mba hokolokoloinao mandrakariva
+Mampanantena ny fanahiko
+‘Lay lehibe noho ‘zaho sy anao.`,
+    favorite: false
+  },
+  {
+    id: "s209",
+    title: "AVY AMINAO IREO ZAVA-MAHASOA",
+    lyrics: `1 Talanjona aho raha nahita ny zava-manan’aina
+Ampitomboina isan’andro ny faniriany.
+Gaga aho, Hainao atao amiko koa izany.
+
+Isan’andininy:
+Ny lanitra mitory ny voninahitrao
+Ny zava-drehetra hainao atao
+
+2 Ireo amboara izay efa hafoninao
+No ho tonga vokatra mamiratra
+Miadana sy miasa ho anao
+Iza re no andehanasa anio?`,
+    favorite: false
+  },
+  {
+    id: "s210",
+    title: "INJANY REKO NY HERINAO",
+    lyrics: `1 Injany reko ny Herinao,
+Mikoriana an-tokiko;
+Toreto ny foko, tsapako,
+Ilay loharano velona miboboka
+Ka mitosaka ato anatiko.
+
+Isan’andininy:
+Haleloia, Haleloia
+Haleloia injany reko ny Herinao (x2)
+
+2 Ray avoavo ny endriko,
+Maivana ny entako;
+Izay rehetra jereko,
+Tsara avokoa.
+Tompo ô! miangavy aho,
+Aza ilaozanao aho
+Fa mamiko ny fanatrehanao.`,
+    favorite: false
+  },
+  {
+    id: "s211",
+    title: "HAFA NY MANOMPO ANAO",
+    lyrics: `1 Tsy misy olona tsy sahirana
+Amin’ny hasarotry ny fiainana
+Fa miavaka foana izay tena an’i Jeso
+Tsy miady irery izy satria manana mpiahy
+Ho tafita ianao! Ho tafavoaka ianao!
+Tsy ho toy izao foana ny fiainanao
+Aza avela hatory ao an-tsambonao
+Fa ho avy Jesosy ‘lay Fisandratanao.
+
+2 Tsy miova omaly, anio ary mandrakizay
+Raha manandratra ahy Izy,
+Hampandresy anao koa
+Hamasio ny tenonao toy ny an’i Jakoba
+Hanamarinany ny Teniny fikasana.
+
+Isan’andininy:
+Mahagaga Jesosy Kristy
+Izy Ilay Mesia,
+Mpanolo-tsaina, mahery
+Mahagaga Jesosy Kristy
+Ilay Andrian’ny fiadanana.`,
+    favorite: false
+  },
+  {
+    id: "s212",
+    title: "HANDROSO EO ALOHAN’AO JESOSY",
+    lyrics: `1 Mitebiteby ianao ka very hevitra
+Mba aiza re ny lalana itondrany ahy
+Mananika havoana, mandalo lohasaha
+Indraindray mamaky efitra
+Dia mitanondrika sy kivy ny fo
+Hatraiza re ny hazim-be alohako
+Ny Tompo no efa mampanantena fa
+Indro Izy handroso eo alohanao.
+
+2 Ady feno anao eo fa satrehanao
+Nibahana fandresena, famonjena
+Anio anefa ianao mitrak’ady indray
+Ka tonga kivy sy mangahiahy
+Aza mitsahatra ny miady ianao
+Mahazoa mampiasa izay nomeny anao
+Tano ny finoana, teny fikasany
+Ho fiadiana hampandresy anao.
+
+Isan’andininy:
+Handrovona ny mikintoantona Izy
+Hanorotoro izay rehetra hidy
+... (andalana sasany tsy mazava amin’ny sary)`,
+    favorite: false
+  },
+  {
+    id: "s213",
+    title: "TSY MAINTSY MISERA AHO",
+    lyrics: `Isan’andininy:
+Tsy maintsy misedra aho, tsy hangina
+Tsy ho voasakana na inona inona
+Satria ilay talenta no ampitomboina
+Ndao hanandina ahy rehefa any aoriana.
+
+1 ‘Ndrain-dray misy zavatra mety ampanjombona ahy
+‘Zay rehetra miseho tsy voatery hampifaly ahy,
+Ka toa alaim-panahy tsy hohaoty intsony
+Nefa Ianao ry Ray nampitraka ahy.
+
+2 Manao zavatra aho, tsy hangina
+Tsy ho voasakana na inona na inona.`,
+    favorite: false
+  },
+  {
+    id: "s214",
+    title: "MAHAY ANDRIAMANITRA",
+    lyrics: `1 Miodrika eo anoloan’ny
+Ny be sy fahefanao
+Manome voninahitra
+Ny fahendrena sy hatsaranao.
+
+Isan’andininy:
+Mahagaga Jesosy Kristy
+Izy Ilay Mesia,
+Mpanolo-tsaina, mahery
+Mahagaga Jesosy Kristy
+Ilay Andrian’ny fiadanana.
+
+2 Tsy vitako, fa vitanao
+Izay rehetra kasainao
+Tsy resy foana ny finoana
+Goliata, nazaranao.`,
+    favorite: false
+  },
+  {
+    id: "s219",
+    title: "NANAMBOARAN’I JESOSY TRANO AHO",
+    lyrics: `1 Nanamboaran’i Jesosy trano any an-danitra aho,
+Trano tsy misy ratra, lavaka mandrakizay,
+Rehefa tonga ny andro handraisany ahy
+Jesosy no hampandry ahy amin’ilay trano vaovao.
+
+Isan’andininy:
+Ao Kanana’ny lanitra
+No toeran’ny ‘lay tranoko,
+‘Reo voavonjy sy ireo masina
+No hiara-monina amiko;
+Tsy ho sondriana intsony aho
+Raha sendra tena lemaka,
+Fa famonjena sy tsara lavitra
+Tranoko mandrakizay.
+
+2 Ny fahoriana sy ny ady eto
+Indraindray mandreraka
+Nefa raha vao tsaroako ilay trano
+Dia mahatsiaro miomana aho.`,
+    favorite: false
+  },
+  {
+    id: "s220",
+    title: "TEHIRIZO HATRAMIN’NY FARANY AHO",
+    lyrics: `1 Takona amiko izay entin’ny ampitso
+Tsy haiko ny lalana mbola miandry ahy
+Saingy toetra ny fanapahan-kevitra
+Hanompo Anao hatramin’ny farany aho.
+
+Isan’andininy:
+Tehirizo hatramin’ny farany aho
+Jesosy ô!
+Hantanteraka ny fizakazahako,
+Ny ho tody soa ao amin’ny fanjakananao
+No hany lehibe mameno ny foko.
+
+2 Tsy hianteherana ny fiainana eto
+Miovaova, tsy hita izay hantenaina
+Indraindray toa maizina, ary eo anampitso
+Tsy vitako Jesosy ô, raha tsy eo Ianao.
+
+3 Finoana tsy misy Anao tsy iriko
+Hafa mihitsy izany fanatrehananao
+Feno fanantenana, fiadanam-po
+Indroindray izaho hoe handova lanitra.`,
+    favorite: false
+  },
+  {
+    id: "s221",
+    title: "IRENY MPITANDRINA IRENY",
+    lyrics: `1 Ireny mpanompon’Andriamanitra ireny
+Dia olom-boafidy, sady olom-boahosotra,
+Natao solom-bava, iraka solon’i Kristy
+Mampahafantatra antsika, sady mpitondra am-bavaka;
+Nantsorin’ny Tompo, ho mpiasan’ny sahany
+Nahafafy zava-drehetra, manohana ny antsony,
+Mba hanangana ny ondry, ho ao amin’ny valany
+Sy mitandrina ireny, miambina ny fanahiny.
+
+Isan’andininy:
+Asa tsy mora ny azy, tsy natao karama
+Kafefa ataony amin-joto, tsy misy taraina,
+Mamaha am-pitomaniana, tsy mba manam-piding
+Efa nataony voady, ny handoa ny vidiny.
+
+2 Olombelona ihany, ‘ndraindray mety ho reraka
+Tsy anjely izy akory, tsy mbola tanteraka.`,
+    favorite: false
+  },
+  {
+    id: "s222",
+    title: "NANDRESY TAO AMIN’NY VAVAKA",
+    lyrics: `1 Teo am-pandresena nivavaka
+No nitolomako tamin’ny adiko
+Teo no nanampizako ireo ady ahy
+Nitaraina, Jesosy ô! mamindra fo!
+
+2 Ny fotoan’na niantsoko ny Anaranao
+Dia nandositr’i Satana ilay rafiko,
+Namikotra tamin’ireo teny fikasana
+Sy ny herinao, no niaro ahy tsy hamoy fo.
+
+Isan’andininy:
+Nandresy tamin’ny vavaka aho,
+Haleloia
+Raha nikatsaka ny tavan’ny Ray tamin’ny fo
+Ny vavaka no nitahiry, nanandratra ahy
+Ny vavaka fanalahidy atoroko.`,
+    favorite: false
+  },
+  {
+    id: "s223",
+    title: "IANAO E! NO ANDRASANAY",
+    lyrics: `1 Jesosy ô! Mba jereo
+Ity sambokelinay ity
+Miady irery ka vonjeo
+Fa atompotsampan’ny onja
+Sy ny tafio-drivotra.
+
+Isan’andininy:
+Ianao e! no andrasanay
+Tsy misy azo atao intsony,
+Raha mety Ianao
+Dia mahay mampilony
+Ny tafio-drivotra sy ny onja
+Dia ho levona.
+
+2 Anaty ranomasim-be
+Reraka ny fo miady ny saina,
+Tsy hita intsony izay haleha
+Fa Ianao no sisa antenaina.
+
+3 Raha mbola hisy ny farany
+Dia tsy ho foana ny fanantenana
+Mitsaoka ny Anarany
+Ny rano hitony, ny rivotra hitsahatra.`,
+    favorite: false
+  },
+  {
+    id: "s224",
+    title: "TSY TARA ANDRIAMANITRA",
+    lyrics: `1 Mihevitra ianao indraindray hoe
+Aiza Andriamanitra,
+Efa ela nitalaho fanampiana aho
+Fa tsy nisy valiny.
+
+2 Ny zavatra rehetra
+Tsy misy very eo anatrehany
+Tsy misy intsony lalana-katja
+Fa ho tanteraka ny teny fikasa.
+
+3 Tsy tara Andriamanitra
+Mety hiandry ianao
+Fa amin’ny fotoanany
+Ho tanteraka izay nampanantenainy.`,
+    favorite: false
+  },
+  {
+    id: "s225",
+    title: "SAOTRA HO AN’I JEHOVAH",
+    lyrics: `Misaotra an’i Jehovah,
+Midera ny Anarany,
+Ny Voninahiny manenika,
+Avo mihatra ny indrafo,
+Mifoka aina ny indrafo,
+Mipaka amin’ny rahona ny fahamarinany
+Mason-tsandry mahery Izy.
+
+Mitadiava an’i Jehovah sy ny heriny
+Karaho isan’andro ny endriny
+Fa masina Izy (bis)
+Ilay Zanak’i Voninahitra no eo anatrehany
+Mianakobaka an-tongony.`,
+    favorite: false
+  },
+  {
+    id: "s226",
+    title: "TERAKA JESOSY MAHAGAGA",
+    lyrics: `Fa Zaza no teraka ho antsika
+Zazalahy no nomeny ho antsika
+Ny fanapahana dia eo an-tsorony
+Fa Izy no Andriamanitry ny mahagaga (bis).`,
+    favorite: false
+  },
+  {
+    id: "s227",
+    title: "HO AN’NY REHETRA NY FAMONJENA",
+    lyrics: `Ho an’ny rehetra ny famonjena
+‘Zay nataon’ny Zanany
+N’iza n’iza samy nomena isika rehetra
+Jesosy Mpamonjy mahay,
+‘Lay natolotry ny Ray
+Hanafaka ny ota
+Sy hanome antsika fiainana vaovao
+Mpamonjy Izy, Mpanavotra
+Maty tamin’ny hazofijaliana,
+Ary nitsangana hanome fiainana
+Tompo Izy, Mpandresy koa
+Mpanome fiainana soa
+Ankalazako tokoa.`,
+    favorite: false
+  },
+  {
+    id: "s228",
+    title: "TSY MAINTSY MINO",
+    lyrics: `Tsy maintsy mino Azy isika (3)
+Haleloia
+Ato am-pontsika ny fitiavany (3)
+Haleloia
+Eny, mino an’i Jesosy aho (3)
+Haleloia
+Mameno ahy ny fifaliany izao (3)
+Haleloia`,
+    favorite: false
+  },
+  {
+    id: "s229",
+    title: "JAONA 1:2",
+    lyrics: `1 Fa izay rehetra nandray Azy
+Dia nomeny hery
+Ho tonga zanak’Andriamanitra
+Dia izay mino ny Anarany (bis).
+
+2 Fa izay rehetra nandray Azy
+No manana ny Ray
+Tsy mahay manota intsony izy
+Fa terak’Andriamanitra (bis).
+
+Famaranana:
+Fa izay rehetra nandray Azy
+Dia nomeny hery ...`,
+    favorite: false
+  },
+  {
+    id: "s391",
+    title: "ILAINA NY MPIJINJA",
+    lyrics: `1 Misy olo-maro izay manontany hoe:
+Moa ve mba misy asa azo atao?
+Nefa indro ny mpampianatra manao hoe:
+Iza re no andehanasa anio?
+
+Isan’andininy:
+Andriamanitra no mpijinja
+Fa efa masaka ny eny an-tsaha
+O! Mifohaza ry mpatory
+Hiasa ho mpijinja isika izao.
+
+2 Ireo amboara izay efa hafoninao
+No ho tonga vokatra mamirapiratra
+Miadana sy miasa ho anao
+Iza re no andehanasa anio?`,
+    favorite: false
+  },
+  {
+    id: "s205",
+    title: "MPAMONJY, MPIANDRY TSARA O, MITARIKA AHY",
+    lyrics: `1 Mpamonjy, Mpiandry tsara ô!
+Mitarika ahy Ianao
+Ampandrio amin’ny ahi-maitso
+Jesosy Malala ô!
+Fahino aho ho Anao;
+Jesosy malalako ô!
+Anao aho, novidiako.
+
+2 Anao aho, ka mombà ahy tokoa,
+Arovy eny an-dalana;
+Alao amin’ny ota rehetra
+Avereno raha mania.
+Jesosy malala ô!
+Ilay fiainana no Anao.
+
+3 Nampanantenenao fa handray,
+Na mpanota mahery;
+Ny fahasoavanao hampody indray,
+Hanadio ny fanahy.
+Jesosy malala ô!
+Ampodio an-tranonao
+Ampodio faingana aho.`,
+    favorite: false
+  }
+];let favoritesOnly=false,current=null,font=16;
+    const $=id=>document.getElementById(id);
+    function render(){const q=$('search').value.trim().toLocaleLowerCase('fr');
+      const arr=songs.filter(s=>(!favoritesOnly||s.favorite)&&(!q||s.title.toLocaleLowerCase('fr').includes(q)||s.lyrics.toLocaleLowerCase('fr').includes(q)));
+      $('list').innerHTML=arr.length?arr.map(s=>`<article class="card song"><div class="ico">♫</div><div class="info"><h3>${esc(s.title)}</h3><p>${s.lyrics.split(/\s+/).filter(Boolean).length} mots · recueil importé</p></div><button class="iconbtn" data-open="${s.id}">Lire</button><button class="iconbtn" data-fav="${s.id}">${s.favorite?'♥':'♡'}</button></article>`).join(''):'<div class="empty">Aucune chanson trouvée. Essaie un autre titre ou mot.</div>';
+      $('list').querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openSong(b.dataset.open));$('list').querySelectorAll('[data-fav]').forEach(b=>b.onclick=()=>toggle(b.dataset.fav));}function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}function openSong(id){current=songs.find(s=>s.id===id);$('readerTitle').textContent=current.title;$('lyrics').textContent=current.lyrics;$('lyrics').style.fontSize=font+'px';$('favBtn').textContent=current.favorite?'♥ Retirer des favoris':'♡ Ajouter aux favoris';$('reader').classList.remove('hidden');$('reader').scrollIntoView({behavior:'smooth',block:'start'});}function toggle(id){const s=songs.find(x=>x.id===id);s.favorite=!s.favorite;render();if(current&&current.id===id)$('favBtn').textContent=s.favorite?'♥ Retirer des favoris':'♡ Ajouter aux favoris';}$('search').addEventListener('input',render);$('all').onclick=()=>{favoritesOnly=false;$('all').classList.add('active');$('favs').classList.remove('active');render();};$('favs').onclick=()=>{favoritesOnly=true;$('favs').classList.add('active');$('all').classList.remove('active');render();};$('favBtn').onclick=()=>current&&toggle(current.id);$('back').onclick=()=>{ $('reader').classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'});};$('bigger').onclick=()=>{font=Math.min(28,font+2);$('lyrics').style.fontSize=font+'px';};$('smaller').onclick=()=>{font=Math.max(12,font-2);$('lyrics').style.fontSize=font+'px';};render();setTimeout(()=>{const s=$('splash');s.style.opacity='0';setTimeout(()=>s.remove(),500);},4000);})();</script></body></html>
+  
