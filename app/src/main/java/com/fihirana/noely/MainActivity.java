@@ -28,9 +28,7 @@ public class MainActivity extends Activity {
         setContentView(webView);
 
         if (savedInstanceState == null) {
-            webView.loadUrl(
-                "https://gmccoder.github.io/Fihirana-noely-2026-version-1/"
-            );
+            webView.loadUrl("file:///android_asset/index.html");
         } else {
             webView.restoreState(savedInstanceState);
         }
